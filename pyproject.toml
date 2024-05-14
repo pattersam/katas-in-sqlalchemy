@@ -1,0 +1,62 @@
+[project]
+name = "sqla-kata"
+dynamic = ["version"]
+description = "Coding Katas using SQLAlchemy in different ways"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = ["SQLAlchemy", "Training"]
+authors = [{ name = "Sam Patterson" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ["click"]
+
+[project.urls]
+Documentation = "https://github.com/pattersam/sqla-kata#readme"
+Issues = "https://github.com/pattersam/sqla-kata/issues"
+Source = "https://github.com/pattersam/sqla-kata"
+
+[project.scripts]
+sqla-kata = "sqla_kata.cli:sqla_kata"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/sqla_kata/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = ["coverage[toml]>=6.5", "pytest"]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = ["- coverage combine", "coverage report"]
+cov = ["test-cov", "cov-report"]
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.12"]
+
+[tool.hatch.envs.types]
+dependencies = ["mypy>=1.0.0"]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/sqla_kata tests}"
+
+[tool.coverage.run]
+source_pkgs = ["sqla_kata", "tests"]
+branch = true
+parallel = true
+omit = ["src/sqla_kata/__about__.py"]
+
+[tool.coverage.paths]
+sqla_kata = ["src/sqla_kata", "*/sqla-kata/src/sqla_kata"]
+tests = ["tests", "*/sqla-kata/tests"]
+
+[tool.coverage.report]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
