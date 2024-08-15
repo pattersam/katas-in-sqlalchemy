@@ -14,7 +14,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["click"]
+dependencies = ["sqlalchemy", "click", "rich"]
 
 [project.urls]
 Documentation = "https://github.com/pattersam/sqla-kata#readme"
